@@ -20,10 +20,10 @@ jobs:
         node-version: '18'
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci
 
     - name: Run tests
-      run: npm test
+      run: npx jest --coverage
 
     - name: Deploy to GitHub Pages
       if: success()
