@@ -1,4 +1,4 @@
-const { add, subtract, multiply, divide } = require('../utils/math');
+const { add, subtract, multiply, divide } = require('../Utils/math');
 
 function calculator(a, b, operation) {
   switch (operation) {
