@@ -26,4 +26,13 @@ describe('Calculator', () => {
   test('throws error on invalid operation', () => {
     expect(() => calculator(5, 5, 'mod')).toThrow('Invalid operation');
   });
+
+  test('throws error when inputs are not numbers', () => {
+    expect(() => calculator('a', 2, 'add')).toThrow('Inputs must be numbers');
+    expect(() => calculator(1, null, 'multiply')).toThrow('Inputs must be numbers');
+  });
+
+  test('returns a float result when needed', () => {
+    expect(calculator(5, 2, 'divide')).toBeCloseTo(2.5);
+  });
 });
