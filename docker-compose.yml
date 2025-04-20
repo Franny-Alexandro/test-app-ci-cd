@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: nginx:alpine
+    container_name: frontend
+    build:
+      context: ./frontend  # Ruta a tu directorio de frontend
+    ports:
+      - "8080:80"  # Exponer el puerto 80 del contenedor al 8080 de tu máquina
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: .  # Ruta al directorio donde está el Dockerfile del backend
+    container_name: backend
+    ports:
+      - "3000:3000"  # Exponer el puerto 3000 del contenedor al 3000 de tu máquina
+    environment:
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://db:27017/miapp  # Configuración para la base de datos
+    networks:
+      - app-network
+    depends_on:
+      - db  # Esperar que el contenedor de la base de datos esté listo antes de arrancar
+
+  db:
+    image: mongo:latest
+    container_name: db
+    ports:
+      - "27017:27017"  # Exponer el puerto de MongoDB
+    volumes:
+      - mongo-data:/data/db  # Volumen persistente para los datos de la base de datos
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
